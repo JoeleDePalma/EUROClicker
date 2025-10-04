@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <!-- Disable generation of the native apphost to avoid access/locking errors during build -->
+    <UseAppHost>false</UseAppHost>
   </PropertyGroup>
 
 </Project>
