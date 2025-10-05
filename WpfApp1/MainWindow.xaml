@@ -84,7 +84,7 @@
 
 
             <Button
-             x:Name="UpgradeButton"
+             x:Name="ClickUpgradeButton"
              Click="UpgradeEUPerClick"
              Width="150"
              Height="40"
@@ -95,7 +95,7 @@
             />
 
             <Button
-                x:Name="AutoclickUpgradeButton"
+                x:Name="AutoclickClickUpgradeButton"
                 Width="150"
                 Height="40"
                 VerticalAlignment="Center"

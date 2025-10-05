@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Upgrades;
 
 namespace Clicker
 {
@@ -20,13 +21,13 @@ namespace Clicker
     /// </summary>
     public partial class MainWindow : Window
     {
-        public long EUValue;
-        public long EUClick;
-        public long PriceUpgradeEUClick;
-        public long PriceUpgradeEUAutoClick;
-        public long EUAutoClick;
-        public const long CLICKUPGRADEVALUE = 1;
-        public DoubleAnimation Earning_opacity_animation = new DoubleAnimation
+        public static long EUValue;
+        public static long EUClick;
+        public static long PriceUpgradeEUClick;
+        public static long PriceUpgradeEUAutoClick;
+        public static long EUAutoClick;
+        public static long ClickUpgradeValue = 1;
+        public static DoubleAnimation Earning_opacity_animation = new DoubleAnimation
         {
             From = 0.0,
             To = 1.0,
@@ -86,17 +87,17 @@ namespace Clicker
 
         public MainWindow()
         {
-            this.EUValue = 0;
-            this.EUClick = 1;
-            this.PriceUpgradeEUClick = 10;
-            this.PriceUpgradeEUAutoClick = 300;
-            this.EUAutoClick = 0;
+            EUValue = 0;
+            EUClick = 1;
+            PriceUpgradeEUClick = 10;
+            PriceUpgradeEUAutoClick = 300;
+            EUAutoClick = 0;
 
             InitializeComponent();
 
             CountTextBlock.Text = $"{EUValue.ToString()}€";
-            UpgradeButton.Content = $"+{CLICKUPGRADEVALUE.ToString()}€ per click\n-{PriceUpgradeEUClick.ToString()}€";
-            AutoclickUpgradeButton.Content = ($"+{CLICKUPGRADEVALUE.ToString()}€ per autoclick\n-{PriceUpgradeEUAutoClick.ToString()}€");
+            ClickUpgradeButton.Content = $"+{ClickUpgradeValue.ToString()}€ per click\n-{PriceUpgradeEUClick.ToString()}€";
+            AutoclickClickUpgradeButton.Content = ($"+{ClickUpgradeValue.ToString()}€ per autoclick\n-{PriceUpgradeEUAutoClick.ToString()}€");
 
             var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             timer.Tick += (sender, e) =>
@@ -116,44 +117,28 @@ namespace Clicker
 
         private void UpgradeClickValue(object sender, RoutedEventArgs e)
         {
-            EUValue += EUClick;
-            CountTextBlock.Text = $"{EUValue.ToString()}€";
-
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                Earning_TextBlock_Animation(sender, e, Earning_click_textblock, Earning_click_canvas, EUClick);
-            }),
-            DispatcherPriority.Loaded);
+            Upgrades_logic.UpgradeClickValue_func
+            (
+                mainWindow: this,
+                sender: sender,
+                e: e
+            );
         }
 
         private void UpgradeEUPerClick(object sender, RoutedEventArgs e)
         {
-
-            if (EUValue < PriceUpgradeEUClick) return;
-
-            EUClick += CLICKUPGRADEVALUE;
-            EUValue -= PriceUpgradeEUClick;
-
-            PriceUpgradeEUClick = (long)Math.Ceiling(PriceUpgradeEUClick * 1.6);
-            UpgradeButton.Content = $"+{CLICKUPGRADEVALUE.ToString()}€ per click\n-{PriceUpgradeEUClick.ToString()}€";
-            CountTextBlock.Text = $"{EUValue.ToString()}€";
-
-            if (!AutoclickUpgradeButton.IsVisible && EUClick > 10)
-            {
-                AutoclickUpgradeButton.Visibility = Visibility.Visible;
-            }
+            Upgrades_logic.UpgradeEUPerClick_func
+            (
+                mainWindow: this
+            );
         }
 
         private void UpgradeEUAutoClick(object sender, RoutedEventArgs e)
         {
-            if (EUValue < PriceUpgradeEUAutoClick) return;
-
-            EUValue -= PriceUpgradeEUAutoClick;
-            EUAutoClick += CLICKUPGRADEVALUE;
-
-            PriceUpgradeEUAutoClick = (long)Math.Ceiling(PriceUpgradeEUAutoClick * 1.6);
-            AutoclickUpgradeButton.Content = $"+{CLICKUPGRADEVALUE.ToString()}€ per autoclick\n-{PriceUpgradeEUAutoClick.ToString()}€";
-            CountTextBlock.Text = $"{EUValue.ToString()}€";
+            Upgrades_logic.UpgradeEUAutoClick_func
+            (
+                mainWindow: this
+            );
         }
     }
 }
