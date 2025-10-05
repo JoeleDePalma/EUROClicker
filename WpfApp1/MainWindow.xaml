@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Clicker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="650"
+        Title="EUROClicker" 
+        Height="450" 
+        Width="650"
+        Background="BurlyWood"
 >
 
     <Grid>
@@ -82,29 +85,88 @@
             Margin="0, 0, -15, 0"
         >
 
-
-            <Button
-             x:Name="ClickUpgradeButton"
-             Click="UpgradeEUPerClick"
-             Width="150"
-             Height="40"
-             VerticalAlignment="Center"
-             HorizontalAlignment="Center"
-             Margin="0, 1, 0, 1"
-             Style="{StaticResource BoostButton}"
-            />
-
-            <Button
-                x:Name="AutoclickClickUpgradeButton"
+            <Border 
+                Style="{StaticResource BoostBorder}"
                 Width="150"
                 Height="40"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Click="UpgradeEUAutoClick"
-                Style="{StaticResource BoostButton}"
                 Margin="0, 1, 0, 1"
+            >
+                
+                <Grid
+                    Width="150"
+                    Height="40"
+                >
+
+                    <TextBlock
+                        Text="+1€ per click"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        FontStyle="Normal"
+                        Height="20"
+                        Width="100"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        TextAlignment="Left"
+                        Margin="0, 5, 0, 0"
+                        Foreground="WhiteSmoke"
+                    />
+
+                    <Button
+                            x:Name="ClickUpgradeButton"
+                            Click="UpgradeEUPerClick"
+                            Width="50"
+                            Height="20"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Margin="0, 0, 20, 0"
+                            Style="{StaticResource BoostButton}"
+                        />
+
+                </Grid>
+
+            </Border>
+
+            <Border
+                x:Name="AutoclickClickUpgradeBorder"
+                Height="40"
+                Width="150"
+                Style="{StaticResource BoostBorder}"
                 Visibility="Collapsed"
-            />
+            >
+
+                <Grid
+                    Width="150"
+                    Height="40"
+                >
+
+                    <TextBlock
+                        Text="+1€ per&#x0a;autoclick"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        FontStyle="Normal"
+                        Height="40"
+                        Width="100"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        TextAlignment="Left"
+                        Margin="0, 5, 0, 0"
+                        Foreground="WhiteSmoke"
+                    />
+
+                    <Button
+                        x:Name="AutoclickClickUpgradeButton"
+                        Width="50"
+                        Height="20"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="0, 0, 20, 0"
+                        Style="{StaticResource BoostButton}"
+                        Click="UpgradeEUAutoClick"
+                    />
+
+                </Grid>
+
+            </Border>
 
         </StackPanel>
 

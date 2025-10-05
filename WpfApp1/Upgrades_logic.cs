@@ -11,8 +11,18 @@ using Clicker;
 
 namespace Upgrades
 {
+    /// <summary>
+    /// Class that contains the logic for the upgrades
+    /// </summary>
     internal static class Upgrades_logic
     {
+
+        /// <summary>
+        /// Function that handles the click event on the principal button to increase the EUValue by EUClick amount
+        /// </summary>
+        /// <param name="mainWindow"></param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static public void UpgradeClickValue_func(MainWindow mainWindow, object? sender, RoutedEventArgs e)
         {
             MainWindow.EUValue += MainWindow.EUClick;
@@ -24,7 +34,11 @@ namespace Upgrades
             }),
             DispatcherPriority.Loaded);
         }
-    
+
+        /// <summary>
+        /// function that handles the click event on the upgrade click button to increase the EUClick by ClickUpgradeValue amount
+        /// </summary>
+        /// <param name="mainWindow"></param>
         static public void UpgradeEUPerClick_func(MainWindow mainWindow)
         {
             if (MainWindow.EUValue < MainWindow.PriceUpgradeEUClick) return;
@@ -33,16 +47,20 @@ namespace Upgrades
             MainWindow.EUClick += MainWindow.ClickUpgradeValue;
 
             MainWindow.PriceUpgradeEUClick = (long)Math.Ceiling(MainWindow.PriceUpgradeEUClick * 1.6);
-            mainWindow.ClickUpgradeButton.Content = $"+{MainWindow.ClickUpgradeValue}€ per click\n-{MainWindow.PriceUpgradeEUClick}€";
+            mainWindow.ClickUpgradeButton.Content = $"-{MainWindow.PriceUpgradeEUClick}€";
             mainWindow.CountTextBlock.Text = $"{MainWindow.EUValue}€";
 
-            if (!mainWindow.AutoclickClickUpgradeButton.IsVisible && MainWindow.EUClick > 10)
+            if (!mainWindow.AutoclickClickUpgradeBorder.IsVisible && MainWindow.EUClick > 10)
             {
-                mainWindow.AutoclickClickUpgradeButton.Visibility = Visibility.Visible;
+                mainWindow.AutoclickClickUpgradeBorder.Visibility = Visibility.Visible;
             }
 
         }
 
+        /// <summary>
+        /// function that handles the click event on the upgrade auto click button to increase the EUAutoClick by ClickUpgradeValue amount
+        /// </summary>
+        /// <param name="mainWindow"></param>
         static public void UpgradeEUAutoClick_func(MainWindow mainWindow)
         {
             if (MainWindow.EUValue < MainWindow.PriceUpgradeEUAutoClick) return;
@@ -51,7 +69,7 @@ namespace Upgrades
             MainWindow.EUAutoClick += MainWindow.ClickUpgradeValue;
 
             MainWindow.PriceUpgradeEUAutoClick = (long)Math.Ceiling(MainWindow.PriceUpgradeEUAutoClick * 1.6);
-            mainWindow.AutoclickClickUpgradeButton.Content = $"+{MainWindow.ClickUpgradeValue.ToString()}€ per autoclick\n-{MainWindow.PriceUpgradeEUAutoClick.ToString()}€";
+            mainWindow.AutoclickClickUpgradeButton.Content = $"-{MainWindow.PriceUpgradeEUAutoClick.ToString()}€";
             mainWindow.CountTextBlock.Text = $"{MainWindow.EUValue.ToString()}€";
         }
     }

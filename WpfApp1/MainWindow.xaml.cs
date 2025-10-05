@@ -21,19 +21,21 @@ namespace Clicker
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static long EUValue;
-        public static long EUClick;
-        public static long PriceUpgradeEUClick;
-        public static long PriceUpgradeEUAutoClick;
-        public static long EUAutoClick;
-        public static long ClickUpgradeValue = 1;
+        public static long EUValue; // Current Euro Liquidity
+        public static long EUClick; // Euro per Click
+        public static long PriceUpgradeEUClick; // Price of Upgrade Euro per Click
+        public static long PriceUpgradeEUAutoClick; // Price of Upgrade Euro per Auto Click
+        public static long EUAutoClick; // Euro per Auto Click
+        public static long ClickUpgradeValue = 1; // Euros to add on each upgrade
         public static DoubleAnimation Earning_opacity_animation = new DoubleAnimation
         {
             From = 0.0,
             To = 1.0,
             Duration = TimeSpan.FromMilliseconds(500),
             AutoReverse = true
-        };
+        }; // Animation for Earning TextBlock
+
+        // The variables are static to be accessible from Upgrades_logic class
         public void Earning_TextBlock_Animation
         (
             object? sender,
@@ -43,11 +45,14 @@ namespace Clicker
             long Earning_click
         )
         {
+            // Updating UI
             Earning_block.Text = $"+{Earning_click.ToString()}€";
 
+            // Random position generation
             short Rand_case1 = (short)Random.Shared.Next(1, 3);
             short Rand_case2 = (short)Random.Shared.Next(1, 3);
 
+            // Defining max and min values for X and Y coordinates
             double maxX;
             double maxY;
             double minX;
@@ -75,30 +80,37 @@ namespace Clicker
                 minY = Math.Max(0, Earning_canvas.ActualHeight / 2 + ClickButton.ActualHeight / 2);
             }
 
-
+            // Defining random position with the max and min values
             int x = Random.Shared.Next(Math.Max(0, (int)minX), Math.Max(1, (int)maxX));
             int y = Random.Shared.Next(Math.Max(0, (int)minY), Math.Max(1, (int)maxY));
 
+            // Setting the text position
             Canvas.SetLeft(Earning_block, x);
             Canvas.SetTop(Earning_block, y);
 
+            // Starting the text animation
             Earning_block.BeginAnimation(OpacityProperty, Earning_opacity_animation);
         }
 
         public MainWindow()
         {
-            EUValue = 0;
+            // Setting initial values
+
+            EUValue = 0; 
             EUClick = 1;
             PriceUpgradeEUClick = 10;
             PriceUpgradeEUAutoClick = 300;
             EUAutoClick = 0;
 
+            // Initializing components
             InitializeComponent();
 
+            // Setting initial UI values
             CountTextBlock.Text = $"{EUValue.ToString()}€";
-            ClickUpgradeButton.Content = $"+{ClickUpgradeValue.ToString()}€ per click\n-{PriceUpgradeEUClick.ToString()}€";
-            AutoclickClickUpgradeButton.Content = ($"+{ClickUpgradeValue.ToString()}€ per autoclick\n-{PriceUpgradeEUAutoClick.ToString()}€");
+            ClickUpgradeButton.Content = $"-{PriceUpgradeEUClick.ToString()}€";
+            AutoclickClickUpgradeButton.Content = ($"-{PriceUpgradeEUAutoClick.ToString()}€");
 
+            // Initializing timer for Auto Click
             var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             timer.Tick += (sender, e) =>
             {
