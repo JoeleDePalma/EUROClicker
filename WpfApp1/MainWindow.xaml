@@ -5,21 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Clicker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="650">
+        Title="MainWindow" Height="450" Width="650"
+>
 
     <Grid>
 
         <TextBlock
-     x:Name="CountTextBlock"
-     Text="0"
-     FontSize="25"
-     Height="40"
-     MinWidth="40"
-     HorizontalAlignment="Center"
-     VerticalAlignment="Top"
-     TextAlignment="Center"
-     Margin="0, 10, 0, 0"
- />
+             x:Name="CountTextBlock"
+             Text="0"
+             FontSize="25"
+             Height="40"
+             MinWidth="40"
+             HorizontalAlignment="Center"
+             VerticalAlignment="Top"
+             TextAlignment="Center"
+             Margin="0, 10, 0, 0"
+         />
 
         <Button
             x:Name="ClickButton"
@@ -49,7 +50,7 @@
                                          Stroke="{TemplateBinding BorderBrush}"
                                          StrokeThickness="{Binding BorderThickness.Left, RelativeSource={RelativeSource TemplatedParent}}"
                                          SnapsToDevicePixels="True"
-                                             />
+                                    />
                                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                                 </Grid>
                                 <ControlTemplate.Triggers>
@@ -78,7 +79,10 @@
             MaxHeight="440"
             VerticalAlignment="Center"
             HorizontalAlignment="Right"
-            >
+            Margin="0, 0, -15, 0"
+        >
+
+
             <Button
              x:Name="UpgradeButton"
              Click="UpgradeEUPerClick"
@@ -86,103 +90,48 @@
              Height="40"
              VerticalAlignment="Center"
              HorizontalAlignment="Center"
-             Margin="0, 0, 0, 0"
-        >
+             Margin="0, 1, 0, 1"
+             Style="{StaticResource BoostButton}"
+            />
 
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock Text="Incrementa il guadagno per click di 1€" 
-                               TextWrapping="Wrap" 
-                               Width="200"
-                               Background="Transparent"
-                               TextAlignment="Left"
-                               />
-                    </ToolTip>
-                </Button.ToolTip>
-
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="FontSize" Value="14"/>
-                        <Setter Property="Background" Value="LightBlue"/>
-                        <Setter Property="BorderBrush" Value="Blue"/>
-                        <Setter Property="BorderThickness" Value="3"/>
-                        <Setter Property="Foreground" Value="Black"/>
-
-                        <Setter Property="Template">
-
-                            <Setter.Value>
-
-                                <ControlTemplate TargetType="Button">
-
-                                    <Grid>
-
-                                        <Border x:Name="BorderBg"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{Binding BorderThickness.Left, RelativeSource={RelativeSource TemplatedParent}}"
-                                CornerRadius="10"
-                                SnapsToDevicePixels="True"/>
-
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
-
-                                    </Grid>
-
-                                    <ControlTemplate.Triggers>
-
-                                        <Trigger Property="IsMouseOver" Value="True">
-
-                                            <Setter TargetName="BorderBg" Property="Background" Value="DodgerBlue"/>
-                                            <Setter TargetName="BorderBg" Property="BorderBrush" Value="DarkBlue"/>
-                                            <Setter Property="Cursor" Value="Hand"/>
-
-                                        </Trigger>
-
-                                        <Trigger Property="IsPressed" Value="True">
-
-                                            <Setter TargetName="BorderBg" Property="Background" Value="DarkBlue"/>
-
-                                        </Trigger>
-
-                                        <Trigger Property="IsEnabled" Value="False">
-
-                                            <Setter TargetName="BorderBg" Property="Opacity" Value="0.5"/>
-
-                                        </Trigger>
-
-                                    </ControlTemplate.Triggers>
-
-                                </ControlTemplate>
-
-                            </Setter.Value>
-
-                        </Setter>
-
-                    </Style>
-
-                </Button.Style>
-
-            </Button>
+            <Button
+                x:Name="AutoclickUpgradeButton"
+                Width="150"
+                Height="40"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Click="UpgradeEUAutoClick"
+                Style="{StaticResource BoostButton}"
+                Margin="0, 1, 0, 1"
+                Visibility="Collapsed"
+            />
 
         </StackPanel>
 
         <Canvas 
-            x:Name="Earning_canvas" 
+            x:Name="Earning_click_canvas" 
             Panel.ZIndex="1000" 
             IsHitTestVisible="False"
             >
             <TextBlock
                 Text="+1€"
-                x:Name="Earning_textblock"
-                FontSize="20"
-                FontFamily="Bernard MT Condensed"
-                Height="30"
-                MinWidth="30"
-                MaxWidth="100"
-                TextAlignment="Center"
-                Opacity="0.0"
-                Foreground="Black"
-                />
+                x:Name="Earning_click_textblock"
+                Style="{StaticResource Earning_TextBlocks}"
+            />
+        </Canvas>
+        
+        <Canvas 
+            x:Name="Earning_AutoClick_canvas" 
+            Panel.ZIndex="1000" 
+            IsHitTestVisible="False"
+            >
+            <TextBlock
+                Text="+1€"
+                x:Name="Earning_AutoClick_textblock"
+                Style="{StaticResource Earning_TextBlocks}"
+            />
         </Canvas>
 
     </Grid>
+    
 </Window>
