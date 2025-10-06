@@ -98,6 +98,7 @@
                 >
 
                     <TextBlock
+                        x:Name="ClickUpgradeTextBlock"
                         Text="+1€ per click"
                         FontSize="12"
                         FontWeight="Bold"
@@ -140,11 +141,12 @@
                 >
 
                     <TextBlock
+                        x:Name="AutoClickUpgradeTextBlock"
                         Text="+1€ per&#x0a;autoclick"
                         FontSize="12"
                         FontWeight="Bold"
                         FontStyle="Normal"
-                        Height="40"
+                        Height="20"
                         Width="100"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
@@ -162,6 +164,50 @@
                         Margin="0, 0, 20, 0"
                         Style="{StaticResource BoostButton}"
                         Click="UpgradeEUAutoClick"
+                    />
+
+                </Grid>
+
+            </Border>
+
+            <Border
+                x:Name="X3EarningUpgradeBorder"
+                Height="40"
+                Width="150"
+                Style="{StaticResource BoostBorder}"
+                Visibility="Collapsed"
+            >
+
+                <Grid
+                    Width="150"
+                    Height="40"
+                >
+
+                    <TextBlock
+                        x:Name="X3EarningUpgradeTextBlock"
+                        Text="Guadagno X3"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        FontStyle="Normal"
+                        Height="20"
+                        Width="100"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center" 
+                        TextAlignment="Justify"
+                        Margin="0, 5, 0, 0"
+                        Foreground="WhiteSmoke"
+                    />
+
+                    <Button
+                        x:Name="X3EarningUpgradeButton"
+                        Width="50"
+                        Height="20"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        HorizontalContentAlignment="Center"
+                        Margin="0, 0, 20, 0"
+                        Style="{StaticResource BoostButton}"
+                        Click="UpgradeX3Earning"
                     />
 
                 </Grid>

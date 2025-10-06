@@ -26,7 +26,8 @@ namespace Clicker
         public static long PriceUpgradeEUClick; // Price of Upgrade Euro per Click
         public static long PriceUpgradeEUAutoClick; // Price of Upgrade Euro per Auto Click
         public static long EUAutoClick; // Euro per Auto Click
-        public static long ClickUpgradeValue = 1; // Euros to add on each upgrade
+        public static long ClickUpgradeValue; // Euros to add on each upgrade
+        public static long PriceUpgradeX3Earning; // Price of the x3 Earning Upgrade
         public static DoubleAnimation Earning_opacity_animation = new DoubleAnimation
         {
             From = 0.0,
@@ -48,41 +49,58 @@ namespace Clicker
             // Updating UI
             Earning_block.Text = $"+{Earning_click.ToString()}€";
 
-            // Random position generation
-            short Rand_case1 = (short)Random.Shared.Next(1, 3);
-            short Rand_case2 = (short)Random.Shared.Next(1, 3);
+            int x;
+            int y;
 
-            // Defining max and min values for X and Y coordinates
-            double maxX;
-            double maxY;
-            double minX;
-            double minY;
+            while (true)
+            {
+                try
+                {
+                    // Random position generation
+                    short Rand_case1 = (short)Random.Shared.Next(1, 3);
+                    short Rand_case2 = (short)Random.Shared.Next(1, 3);
 
-            if (Rand_case1 == 1)
-            {
-                maxX = Math.Max(0, Earning_canvas.ActualWidth / 2 - Earning_block.ActualWidth - ClickButton.ActualWidth / 2);
-                minX = 0;
-            }
-            else
-            {
-                maxX = Math.Max(0, Earning_canvas.ActualWidth - Earning_block.ActualWidth - BoostsPanel.ActualWidth);
-                minX = Math.Max(0, Earning_canvas.ActualWidth / 2 + ClickButton.ActualWidth / 2);
-            }
+                    // Defining max and min values for X and Y coordinates
+                    double maxX;
+                    double maxY;
+                    double minX;
+                    double minY;
 
-            if (Rand_case2 == 1)
-            {
-                maxY = Math.Max(0, Earning_canvas.ActualHeight / 2 - Earning_block.ActualHeight - ClickButton.ActualHeight / 2);
-                minY = 0;
-            }
-            else
-            {
-                maxY = Math.Max(0, Earning_canvas.ActualHeight - Earning_block.ActualHeight - CountTextBlock.ActualHeight - CountTextBlock.Margin.Top);
-                minY = Math.Max(0, Earning_canvas.ActualHeight / 2 + ClickButton.ActualHeight / 2);
-            }
+                    if (Rand_case1 == 1)
+                    {
+                        maxX = Math.Max(0, Earning_canvas.ActualWidth / 2 - Earning_block.ActualWidth - ClickButton.ActualWidth / 2);
+                        minX = 0;
+                    }
+                    else
+                    {
+                        maxX = Math.Max(0, Earning_canvas.ActualWidth - Earning_block.ActualWidth - BoostsPanel.ActualWidth);
+                        minX = Math.Max(0, Earning_canvas.ActualWidth / 2 + ClickButton.ActualWidth / 2);
+                    }
 
-            // Defining random position with the max and min values
-            int x = Random.Shared.Next(Math.Max(0, (int)minX), Math.Max(1, (int)maxX));
-            int y = Random.Shared.Next(Math.Max(0, (int)minY), Math.Max(1, (int)maxY));
+                    if (Rand_case2 == 1)
+                    {
+                        maxY = Math.Max(0, Earning_canvas.ActualHeight / 2 - Earning_block.ActualHeight - ClickButton.ActualHeight / 2);
+                        minY = 0;
+                    }
+                    else
+                    {
+                        maxY = Math.Max(0, Earning_canvas.ActualHeight - Earning_block.ActualHeight - CountTextBlock.ActualHeight - CountTextBlock.Margin.Top);
+                        minY = Math.Max(0, Earning_canvas.ActualHeight / 2 + ClickButton.ActualHeight / 2);
+                    }
+
+                    // Defining random position with the max and min values
+                    x = Random.Shared.Next(Math.Max(0, (int)minX), Math.Max(1, (int)maxX));
+                    y = Random.Shared.Next(Math.Max(0, (int)minY), Math.Max(1, (int)maxY));
+
+                    break;
+                }
+
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error generating random position: {ex.Message}");
+                    return;
+                }
+            }
 
             // Setting the text position
             Canvas.SetLeft(Earning_block, x);
@@ -101,6 +119,8 @@ namespace Clicker
             PriceUpgradeEUClick = 10;
             PriceUpgradeEUAutoClick = 300;
             EUAutoClick = 0;
+            ClickUpgradeValue = 1;
+            PriceUpgradeX3Earning = 1000;
 
             // Initializing components
             InitializeComponent();
@@ -109,6 +129,7 @@ namespace Clicker
             CountTextBlock.Text = $"{EUValue.ToString()}€";
             ClickUpgradeButton.Content = $"-{PriceUpgradeEUClick.ToString()}€";
             AutoclickClickUpgradeButton.Content = ($"-{PriceUpgradeEUAutoClick.ToString()}€");
+            X3EarningUpgradeButton.Content = ($"-{PriceUpgradeX3Earning.ToString()}€");
 
             // Initializing timer for Auto Click
             var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
@@ -148,6 +169,14 @@ namespace Clicker
         private void UpgradeEUAutoClick(object sender, RoutedEventArgs e)
         {
             Upgrades_logic.UpgradeEUAutoClick_func
+            (
+                mainWindow: this
+            );
+        }
+
+        private void UpgradeX3Earning(object sender, RoutedEventArgs e)
+        {
+            Upgrades_logic.UpgradeX3Earning_func
             (
                 mainWindow: this
             );
